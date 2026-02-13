@@ -1,0 +1,1133 @@
+/* ============================================================
+   MakeMeRich — Style System
+   NOVA's design: Dark luxury meets neon vitality.
+   ============================================================ */
+
+/* --- Design Tokens --- */
+:root {
+    /* Core palette */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    --bg-card-border: rgba(255, 255, 255, 0.08);
+
+    /* Neon accents */
+    --neon-green: #00ff87;
+    --neon-cyan: #00d4ff;
+    --neon-green-dim: rgba(0, 255, 135, 0.15);
+    --neon-cyan-dim: rgba(0, 212, 255, 0.10);
+
+    /* Gradient */
+    --gradient-main: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+    --gradient-subtle: linear-gradient(135deg, rgba(0, 255, 135, 0.2), rgba(0, 212, 255, 0.2));
+    --gradient-glow: linear-gradient(135deg, rgba(0, 255, 135, 0.4), rgba(0, 212, 255, 0.4));
+
+    /* Text */
+    --text-primary: #f0f0f0;
+    --text-secondary: #8a8a8a;
+    --text-muted: #555555;
+
+    /* Typography */
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    --space-3xl: 4rem;
+    --space-4xl: 6rem;
+
+    /* Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-glow: 0 0 20px rgba(0, 255, 135, 0.15), 0 0 60px rgba(0, 255, 135, 0.05);
+    --shadow-glow-strong: 0 0 30px rgba(0, 255, 135, 0.25), 0 0 80px rgba(0, 255, 135, 0.1);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.6);
+
+    /* Transitions */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-fast: 0.2s var(--ease-out-expo);
+    --transition-normal: 0.4s var(--ease-out-expo);
+    --transition-slow: 0.7s var(--ease-out-expo);
+}
+
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-display);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Grain/noise texture overlay for depth */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1000;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
+/* Subtle radial glow behind hero */
+body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 255, 135, 0.06) 0%, rgba(0, 212, 255, 0.03) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+a {
+    color: var(--neon-green);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--neon-cyan);
+}
+
+::selection {
+    background: rgba(0, 255, 135, 0.3);
+    color: #fff;
+}
+
+
+/* --- Layout --- */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--space-lg);
+    position: relative;
+    z-index: 1;
+}
+
+.section {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* --- Gradient Text Utility --- */
+.gradient-text {
+    background: var(--gradient-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+
+/* ============================================================
+   HERO / INPUT SECTION
+   ============================================================ */
+#hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: var(--space-3xl) 0;
+}
+
+#hero .container {
+    animation: heroEnter 1s var(--ease-out-expo) both;
+}
+
+@keyframes heroEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: var(--space-sm);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-xl);
+}
+
+.hero-description {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 460px;
+    margin: 0 auto var(--space-3xl);
+    line-height: 1.7;
+}
+
+
+/* --- The Income Input --- */
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-lg) var(--space-xl);
+    max-width: 480px;
+    margin: 0 auto var(--space-xl);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.input-group:focus-within {
+    border-color: var(--neon-green);
+    box-shadow: var(--shadow-glow), inset 0 0 30px rgba(0, 255, 135, 0.03);
+}
+
+.currency-symbol {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--neon-green);
+    line-height: 1;
+}
+
+#income-input {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    max-width: 260px;
+    text-align: center;
+    caret-color: var(--neon-green);
+    line-height: 1;
+}
+
+#income-input::placeholder {
+    color: var(--text-muted);
+}
+
+.currency-label {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+
+/* --- Primary CTA Button --- */
+.btn-primary {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--bg-primary);
+    background: var(--gradient-main);
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-normal), opacity var(--transition-fast);
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--shadow-glow-strong);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0) scale(0.98);
+}
+
+.btn-primary:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-primary:not(:disabled) {
+    animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 255, 135, 0.2), 0 0 60px rgba(0, 255, 135, 0.05);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(0, 255, 135, 0.35), 0 0 80px rgba(0, 255, 135, 0.1);
+    }
+}
+
+.hero-note {
+    margin-top: var(--space-xl);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+
+/* ============================================================
+   RESULTS SECTION
+   ============================================================ */
+#results {
+    padding: var(--space-3xl) 0 var(--space-4xl);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+#results.hidden {
+    display: none;
+}
+
+#hero.hidden {
+    display: none;
+}
+
+
+/* --- Result Cards (Glassmorphism) --- */
+.result-card {
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl) var(--space-xl);
+    margin: 0 var(--space-lg) var(--space-xl);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: var(--shadow-card);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+    /* Scroll reveal initial state */
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.result-card.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s var(--ease-out-quint), transform 0.7s var(--ease-out-quint);
+}
+
+.result-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-elevated);
+}
+
+.result-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xl);
+}
+
+
+/* ============================================================
+   GLOBAL RANKING
+   ============================================================ */
+.big-number {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: var(--space-xs);
+    margin: var(--space-xl) 0 var(--space-lg);
+}
+
+.big-number .prefix,
+.big-number .suffix {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+}
+
+.big-number .gradient-text {
+    font-family: var(--font-mono);
+    font-size: clamp(5rem, 12vw, 8.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+}
+
+.stat-description {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-bottom: var(--space-xl);
+}
+
+.stat-description strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Ranking progress bar */
+.ranking-bar {
+    position: relative;
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-full);
+    overflow: visible;
+    margin-bottom: var(--space-sm);
+}
+
+.ranking-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    background: var(--gradient-main);
+    width: 0%;
+    transition: width 1.5s var(--ease-out-expo);
+    box-shadow: 0 0 12px rgba(0, 255, 135, 0.3);
+}
+
+.ranking-marker {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    border: 3px solid var(--bg-primary);
+    box-shadow: 0 0 12px rgba(0, 255, 135, 0.5);
+    transition: left 1.5s var(--ease-out-expo);
+    z-index: 2;
+}
+
+.ranking-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+
+/* ============================================================
+   MONEY CLOCK
+   ============================================================ */
+.money-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+}
+
+.money-unit {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg) var(--space-md);
+    text-align: center;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.money-unit:hover {
+    border-color: rgba(0, 255, 135, 0.2);
+    background: rgba(0, 255, 135, 0.03);
+}
+
+.money-value {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.02em;
+}
+
+.money-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Live counter */
+.live-counter {
+    text-align: center;
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, rgba(0, 255, 135, 0.04), rgba(0, 212, 255, 0.04));
+    border: 1px solid rgba(0, 255, 135, 0.1);
+    border-radius: var(--radius-md);
+}
+
+.live-counter p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--space-md);
+}
+
+.live-earnings {
+    font-family: var(--font-mono);
+    font-size: clamp(2.5rem, 7vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    display: inline-block;
+    transition: transform 0.15s ease;
+}
+
+.live-earnings.tick {
+    transform: scale(1.06);
+}
+
+
+/* ============================================================
+   BILLIONAIRE COMPARISON
+   ============================================================ */
+.billionaire-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.billionaire-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.billionaire-item:hover {
+    border-color: rgba(0, 255, 135, 0.15);
+    background: rgba(0, 255, 135, 0.02);
+}
+
+.billionaire-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--gradient-subtle);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.billionaire-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.billionaire-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.billionaire-name {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.billionaire-net-worth {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.billionaire-time {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--neon-green);
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* Comparison bar */
+.billionaire-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-full);
+    margin-top: var(--space-sm);
+    overflow: hidden;
+}
+
+.billionaire-bar-fill {
+    height: 100%;
+    background: var(--gradient-main);
+    border-radius: var(--radius-full);
+    transition: width 1.2s var(--ease-out-expo);
+}
+
+
+/* ============================================================
+   PURCHASING POWER / COUNTRY GRID
+   ============================================================ */
+.country-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+}
+
+.country-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-align: center;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.country-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 212, 255, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.country-flag {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-sm);
+    display: block;
+}
+
+.country-name {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+}
+
+.country-equivalent {
+    font-family: var(--font-mono);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.country-feel {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+}
+
+
+/* ============================================================
+   WHAT IT BUYS
+   ============================================================ */
+.buys-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-md);
+}
+
+.buys-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-align: center;
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.buys-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 255, 135, 0.15);
+}
+
+.buys-emoji {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+    display: block;
+}
+
+.buys-count {
+    font-family: var(--font-mono);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--neon-green);
+    display: block;
+    margin-bottom: var(--space-xs);
+}
+
+.buys-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+
+/* ============================================================
+   DAILY TIP
+   ============================================================ */
+.tip-card {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(0, 255, 135, 0.03), rgba(0, 212, 255, 0.03));
+    border-color: rgba(0, 255, 135, 0.1);
+}
+
+.daily-tip {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin: var(--space-xl) 0 var(--space-md);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tip-category {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--neon-cyan);
+    background: rgba(0, 212, 255, 0.1);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+}
+
+
+/* ============================================================
+   SHARE / WEALTH CARD
+   ============================================================ */
+.share-card {
+    text-align: center;
+}
+
+.wealth-card-preview {
+    margin: var(--space-xl) auto;
+    max-width: 420px;
+    min-height: 240px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: linear-gradient(135deg, #0d1117, #161b22);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wealth-card-preview canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
+}
+
+.share-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Secondary button */
+.btn-secondary {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0) scale(0.97);
+}
+
+
+/* ============================================================
+   TRY AGAIN
+   ============================================================ */
+.try-again {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg) var(--space-xl);
+}
+
+.btn-outline {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--neon-green);
+    background: transparent;
+    border: 2px solid var(--neon-green);
+    border-radius: var(--radius-full);
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-outline:hover {
+    background: var(--neon-green);
+    color: var(--bg-primary);
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+.btn-outline:active {
+    transform: translateY(0) scale(0.97);
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-lg) var(--space-2xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    z-index: 1;
+}
+
+footer p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-sm);
+}
+
+footer strong {
+    color: var(--text-secondary);
+}
+
+.footer-sub {
+    font-size: 0.75rem !important;
+    color: var(--text-muted);
+}
+
+.footer-links {
+    margin-top: var(--space-md);
+}
+
+.footer-links a {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--neon-green);
+}
+
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION
+   ============================================================ */
+.result-card:nth-child(1) { transition-delay: 0.0s; }
+.result-card:nth-child(2) { transition-delay: 0.08s; }
+.result-card:nth-child(3) { transition-delay: 0.16s; }
+.result-card:nth-child(4) { transition-delay: 0.24s; }
+.result-card:nth-child(5) { transition-delay: 0.32s; }
+.result-card:nth-child(6) { transition-delay: 0.40s; }
+.result-card:nth-child(7) { transition-delay: 0.48s; }
+
+
+/* ============================================================
+   SECTION TRANSITIONS
+   ============================================================ */
+.section {
+    transition: opacity 0.5s var(--ease-out-expo);
+}
+
+.section.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+
+/* ============================================================
+   LIVE COUNTER TICK ANIMATION
+   ============================================================ */
+@keyframes tickPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.live-earnings.tick {
+    animation: tickPulse 0.15s ease;
+}
+
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+
+/* Tablets and below */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: clamp(2.4rem, 10vw, 3.5rem);
+    }
+
+    .big-number .gradient-text {
+        font-size: clamp(4rem, 14vw, 6rem);
+    }
+
+    .input-group {
+        padding: var(--space-md) var(--space-lg);
+        flex-direction: row;
+    }
+
+    #income-input {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
+        max-width: 180px;
+    }
+
+    .currency-symbol {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
+    }
+
+    .money-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .country-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .buys-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .result-card {
+        margin: 0 var(--space-md) var(--space-lg);
+        padding: var(--space-xl) var(--space-lg);
+    }
+
+    .billionaire-item {
+        flex-wrap: wrap;
+    }
+
+    .billionaire-time {
+        width: 100%;
+        text-align: left;
+        margin-top: var(--space-sm);
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.4rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .big-number .gradient-text {
+        font-size: 3.5rem;
+    }
+
+    .big-number .prefix,
+    .big-number .suffix {
+        font-size: 1.2rem;
+    }
+
+    .input-group {
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+    }
+
+    #income-input {
+        font-size: 1.5rem;
+        max-width: 140px;
+    }
+
+    .currency-symbol {
+        font-size: 1.5rem;
+    }
+
+    .money-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+    }
+
+    .money-value {
+        font-size: 1.2rem;
+    }
+
+    .live-earnings {
+        font-size: 2rem;
+    }
+
+    .country-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+    }
+
+    .buys-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-sm);
+    }
+
+    .share-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .result-card {
+        margin: 0 var(--space-sm) var(--space-md);
+        padding: var(--space-lg) var(--space-md);
+    }
+
+    .billionaire-avatar {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+
+    .billionaire-item {
+        padding: var(--space-md);
+        gap: var(--space-md);
+    }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+    #results {
+        max-width: 800px;
+    }
+
+    .country-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .buys-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+/* ============================================================
+   LOADING / SKELETON STATES
+   ============================================================ */
+.skeleton {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+.text-center { text-align: center; }
+.text-mono { font-family: var(--font-mono); }
+.text-muted { color: var(--text-muted); }
+.text-green { color: var(--neon-green); }
+.text-cyan { color: var(--neon-cyan); }
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mt-lg { margin-top: var(--space-lg); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+.mb-lg { margin-bottom: var(--space-lg); }
+.hidden { display: none; }
+
+/* Focus visible for accessibility */
+*:focus-visible {
+    outline: 2px solid var(--neon-green);
+    outline-offset: 3px;
+}
+
+/* Smooth scrollbar styling for Webkit */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

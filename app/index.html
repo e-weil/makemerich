@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakeMeRich — Know Your Worth</title>
+    <meta name="description" content="How rich are you really? Enter your income and see your global ranking, earnings per second, and how you compare to billionaires.">
+
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="MakeMeRich — Know Your Worth">
+    <meta property="og:description" content="I just found out I'm richer than 85% of the world. How about you?">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://makemerich.app">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MakeMeRich — Know Your Worth">
+    <meta name="twitter:description" content="How rich are you really? Find out now.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero / Input Section -->
+    <section id="hero" class="section active">
+        <div class="container">
+            <h1 class="hero-title">
+                <span class="gradient-text">MakeMeRich</span>
+            </h1>
+            <p class="hero-subtitle">Know Your Worth</p>
+            <p class="hero-description">Enter your annual income. We'll show you where you stand on planet Earth.</p>
+
+            <div class="input-group">
+                <span class="currency-symbol">$</span>
+                <input type="text" id="income-input" placeholder="50,000" autocomplete="off" inputmode="numeric">
+                <span class="currency-label">/ year</span>
+            </div>
+
+            <button id="calculate-btn" class="btn-primary" disabled>Show Me My Worth</button>
+
+            <p class="hero-note">No signup. No data stored. Just math.</p>
+        </div>
+    </section>
+
+    <!-- Results Section (hidden until calculated) -->
+    <section id="results" class="section hidden">
+
+        <!-- Global Ranking -->
+        <div id="ranking-section" class="result-card">
+            <h2>Your Global Ranking</h2>
+            <div class="big-number">
+                <span class="prefix">Top</span>
+                <span id="percentile" class="gradient-text">—</span>
+                <span class="suffix">%</span>
+            </div>
+            <p id="richer-than" class="stat-description">You're richer than <strong>—</strong> people on Earth</p>
+            <div class="ranking-bar">
+                <div id="ranking-fill" class="ranking-fill"></div>
+                <div id="ranking-marker" class="ranking-marker"></div>
+            </div>
+            <div class="ranking-labels">
+                <span>Poorest</span>
+                <span>You</span>
+                <span>Richest</span>
+            </div>
+        </div>
+
+        <!-- Money Clock -->
+        <div id="clock-section" class="result-card">
+            <h2>Your Money Clock</h2>
+            <p class="section-subtitle">Right now, you're earning...</p>
+            <div class="money-grid">
+                <div class="money-unit">
+                    <span id="per-second" class="money-value">—</span>
+                    <span class="money-label">per second</span>
+                </div>
+                <div class="money-unit">
+                    <span id="per-minute" class="money-value">—</span>
+                    <span class="money-label">per minute</span>
+                </div>
+                <div class="money-unit">
+                    <span id="per-hour" class="money-value">—</span>
+                    <span class="money-label">per hour</span>
+                </div>
+                <div class="money-unit">
+                    <span id="per-day" class="money-value">—</span>
+                    <span class="money-label">per day</span>
+                </div>
+            </div>
+            <div class="live-counter">
+                <p>Since you opened this page, you've earned:</p>
+                <span id="live-earnings" class="live-earnings gradient-text">$0.00</span>
+            </div>
+        </div>
+
+        <!-- Billionaire Comparison -->
+        <div id="billionaire-section" class="result-card">
+            <h2>You vs. Billionaires</h2>
+            <p class="section-subtitle">How long for them to earn your annual income?</p>
+            <div id="billionaire-list" class="billionaire-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Purchasing Power -->
+        <div id="power-section" class="result-card">
+            <h2>Your Money Around the World</h2>
+            <p class="section-subtitle">What your income feels like in different countries</p>
+            <div id="country-list" class="country-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- What It Buys -->
+        <div id="buys-section" class="result-card">
+            <h2>What Your Income Buys</h2>
+            <div id="buys-list" class="buys-grid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+
+        <!-- Daily Tip -->
+        <div id="tip-section" class="result-card tip-card">
+            <h2>Daily Money Tip</h2>
+            <p id="daily-tip" class="daily-tip">—</p>
+            <span id="tip-category" class="tip-category">—</span>
+        </div>
+
+        <!-- Share / Wealth Card -->
+        <div id="share-section" class="result-card share-card">
+            <h2>Share Your Wealth Card</h2>
+            <div id="wealth-card-preview" class="wealth-card-preview">
+                <!-- Canvas-generated card preview -->
+            </div>
+            <div class="share-buttons">
+                <button id="download-card" class="btn-secondary">Download Card</button>
+                <button id="copy-link" class="btn-secondary">Copy Link</button>
+                <button id="share-twitter" class="btn-secondary">Share on X</button>
+            </div>
+        </div>
+
+        <!-- Try Again -->
+        <div class="try-again">
+            <button id="reset-btn" class="btn-outline">Try Another Income</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built by <strong>The MakeMeRich Six</strong> — Ivan, Atlas, Nova, Cipher, Pulse & Forge</p>
+        <p class="footer-sub">No data stored. No AI. Just math that changes perspective.</p>
+        <p class="footer-links">
+            <a href="https://github.com/e-weil/makemerich" target="_blank">GitHub</a>
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/calculator.js"></script>
+    <script src="js/rankings.js"></script>
+    <script src="js/comparisons.js"></script>
+    <script src="js/cards.js"></script>
+    <script src="js/share.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

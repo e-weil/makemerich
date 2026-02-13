@@ -1,0 +1,22 @@
+[
+  {"name": "Elon Musk", "net_worth_b": 250, "per_second": 317, "company": "Tesla/SpaceX/X", "emoji": "🚀"},
+  {"name": "Jeff Bezos", "net_worth_b": 200, "per_second": 254, "company": "Amazon", "emoji": "📦"},
+  {"name": "Bernard Arnault", "net_worth_b": 190, "per_second": 201, "company": "LVMH", "emoji": "👜"},
+  {"name": "Mark Zuckerberg", "net_worth_b": 180, "per_second": 286, "company": "Meta", "emoji": "👤"},
+  {"name": "Larry Ellison", "net_worth_b": 165, "per_second": 131, "company": "Oracle", "emoji": "💾"},
+  {"name": "Warren Buffett", "net_worth_b": 145, "per_second": 77, "company": "Berkshire Hathaway", "emoji": "🏦"},
+  {"name": "Bill Gates", "net_worth_b": 137, "per_second": 109, "company": "Microsoft", "emoji": "💻"},
+  {"name": "Larry Page", "net_worth_b": 130, "per_second": 165, "company": "Alphabet/Google", "emoji": "🔍"},
+  {"name": "Sergey Brin", "net_worth_b": 125, "per_second": 159, "company": "Alphabet/Google", "emoji": "🌐"},
+  {"name": "Steve Ballmer", "net_worth_b": 120, "per_second": 152, "company": "Microsoft", "emoji": "🏀"},
+  {"name": "Mukesh Ambani", "net_worth_b": 115, "per_second": 122, "company": "Reliance Industries", "emoji": "🇮🇳"},
+  {"name": "Jensen Huang", "net_worth_b": 110, "per_second": 140, "company": "NVIDIA", "emoji": "🎮"},
+  {"name": "Amancio Ortega", "net_worth_b": 100, "per_second": 80, "company": "Inditex/Zara", "emoji": "👔"},
+  {"name": "Gautam Adani", "net_worth_b": 85, "per_second": 135, "company": "Adani Group", "emoji": "⚡"},
+  {"name": "Michael Bloomberg", "net_worth_b": 82, "per_second": 65, "company": "Bloomberg LP", "emoji": "📊"},
+  {"name": "Carlos Slim Helu", "net_worth_b": 80, "per_second": 64, "company": "Telmex/America Movil", "emoji": "📡"},
+  {"name": "Francoise Bettencourt Meyers", "net_worth_b": 78, "per_second": 83, "company": "L'Oreal", "emoji": "💄"},
+  {"name": "Zhong Shanshan", "net_worth_b": 62, "per_second": 99, "company": "Nongfu Spring", "emoji": "💧"},
+  {"name": "Ma Huateng", "net_worth_b": 48, "per_second": 61, "company": "Tencent", "emoji": "💬"},
+  {"name": "Michael Dell", "net_worth_b": 45, "per_second": 36, "company": "Dell Technologies", "emoji": "🖥️"}
+]

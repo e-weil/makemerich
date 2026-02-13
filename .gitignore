@@ -1,7 +1,7 @@
 __pycache__/
 *.pyc
 .env
-data/
+/data/
 *.egg-info/
 dist/
 build/
