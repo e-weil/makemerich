@@ -1,0 +1,28 @@
+mode: paper                    # paper | live
+cycle_interval: 60             # Seconds between each analysis cycle
+timeframe: "1h"                # Main timeframe
+
+trading_pairs:
+  - BTCUSDT
+  - ETHUSDT
+
+risk:
+  max_risk_per_trade: 0.02     # 2% max per trade
+  max_positions: 5
+  min_cash_percent: 30         # Always keep 30% in stablecoins
+  max_leverage: 1              # No leverage by default
+  default_stop_loss_pct: 0.03  # 3% stop-loss default
+
+binance:
+  testnet: true                # Use testnet for paper trading
+
+llm:
+  model: "claude-sonnet-4-5-20250929"
+  max_tokens: 4096
+
+notifications:
+  telegram:
+    enabled: false
+    on_trade: true
+    on_error: true
+    daily_summary: true

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakeMeRich Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', monospace; background: #0a0a0a; color: #00ff41; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        h1 { text-align: center; margin-bottom: 20px; font-size: 2em; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+        .status-bar { display: flex; justify-content: space-between; padding: 10px;
+                      background: #111; border: 1px solid #333; margin-bottom: 20px; }
+        .status-item { }
+        .valid { color: #00ff41; }
+        .invalid { color: #ff0041; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #222; }
+        th { color: #888; text-transform: uppercase; font-size: 0.8em; }
+        .action-buy { color: #00ff41; }
+        .action-sell { color: #ff4141; }
+        .action-hold { color: #888; }
+        .reasoning { max-width: 400px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .confidence { }
+        .confidence-high { color: #00ff41; }
+        .confidence-med { color: #ffaa00; }
+        .confidence-low { color: #ff4141; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MakeMeRich</h1>
+        <p class="subtitle">The AI that actually makes you $</p>
+
+        <div class="status-bar">
+            <div class="status-item">
+                Audit Chain:
+                {% if chain_valid %}
+                    <span class="valid">VALID</span>
+                {% else %}
+                    <span class="invalid">BROKEN</span>
+                {% endif %}
+            </div>
+            <div class="status-item">Trades: {{ trades | length }}</div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Action</th>
+                    <th>Pair</th>
+                    <th>Amount</th>
+                    <th>Confidence</th>
+                    <th>Reasoning</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trade in trades | reverse %}
+                <tr>
+                    <td>{{ trade.timestamp[:19] }}</td>
+                    <td class="action-{{ trade.action | lower }}">{{ trade.action }}</td>
+                    <td>{{ trade.pair }}</td>
+                    <td>{{ trade.amount }}</td>
+                    <td class="confidence {% if trade.confidence > 0.7 %}confidence-high{% elif trade.confidence > 0.4 %}confidence-med{% else %}confidence-low{% endif %}">
+                        {{ (trade.confidence * 100) | round }}%
+                    </td>
+                    <td class="reasoning">{{ trade.reasoning[:100] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+name: scalper
+description: "Frequent small trades. Short timeframes, tight stops."
+
+pairs:
+  - BTCUSDT
+  - ETHUSDT
+
+risk:
+  max_risk_per_trade: 0.005    # 0.5% max per trade
+  max_positions: 3
+  min_cash_percent: 60
+  max_leverage: 1
+  default_stop_loss_pct: 0.01  # 1% stop-loss
+
+strategy:
+  primary: momentum
+  timeframe: "5m"
+  cycle_interval: 30           # Check every 30 seconds
+  min_confidence: 0.6

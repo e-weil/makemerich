@@ -1,0 +1,21 @@
+name: aggressive
+description: "Higher risk, higher reward. More pairs, wider stops."
+
+pairs:
+  - BTCUSDT
+  - ETHUSDT
+  - SOLUSDT
+  - AVAXUSDT
+  - DOTUSDT
+
+risk:
+  max_risk_per_trade: 0.03     # 3% max per trade
+  max_positions: 8
+  min_cash_percent: 20         # 20% in stablecoins
+  max_leverage: 1
+  default_stop_loss_pct: 0.05  # 5% stop-loss
+
+strategy:
+  primary: momentum
+  timeframe: "1h"
+  min_confidence: 0.5

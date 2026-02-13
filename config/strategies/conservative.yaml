@@ -1,0 +1,18 @@
+name: conservative
+description: "Low risk, steady gains. Focus on major pairs with tight stops."
+
+pairs:
+  - BTCUSDT
+  - ETHUSDT
+
+risk:
+  max_risk_per_trade: 0.01     # 1% max per trade
+  max_positions: 3
+  min_cash_percent: 50         # 50% always in stablecoins
+  max_leverage: 1
+  default_stop_loss_pct: 0.02  # 2% stop-loss
+
+strategy:
+  primary: mean_reversion
+  timeframe: "4h"
+  min_confidence: 0.7          # Only trade with high confidence

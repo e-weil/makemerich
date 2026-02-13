@@ -1,0 +1,1 @@
+"""MakeMeRich Web Dashboard."""
